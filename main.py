@@ -1,4 +1,5 @@
-import os, csv, requests, uuid, threading, time, re
+import os, csv, requests, uuid, re
+
 
 dir = input("Enter the file direction of the discord messages folder: ")
 
@@ -32,21 +33,37 @@ def downloading_file_task():
         # print(str(list(list_file).index(e)) +  " / " + str(len(list(list_file))), f, e)
 
 
-def grab_file_from_csv_task():
-    for folder in list_folder:
-        if os.path.isfile(folder + "\messages.csv"):
-            with open(folder + "\messages.csv", 'r', encoding="utf-8") as file:
-                reader = csv.DictReader(file)
-                try:
-                    for row in reader:
-                        column_value = row["Attachments"]
-                        if column_value.startswith('https://cdn.discordapp.com'):
-                            list_file[column_value] = folder + "\messages.csv"
+def grab_file_from_csv_task(folder): 
+    if os.path.isfile(folder + "\messages.csv"):
+        with open(folder + "\messages.csv", 'r', encoding="utf-8") as file:
+            reader = csv.DictReader(file)
+            try:
+                for row in reader:
+                    column_value = row["Attachments"]
+                    if column_value.startswith('https://cdn.discordapp.com'):
+                        list_file[column_value] = folder + "\messages.csv"
 
-                except ValueError:
-                    print('No Attachments column')
+            except ValueError:
+                print('No Attachments column')
 
-main_thread = threading.Thread(target=grab_file_from_csv_task)
-main_thread.start()
-time.sleep(0.3)
-downloading_file_task()
+
+while True:        
+    choice = input("Choose a specific concersation or export all (Specific: S | All : A) : ")
+
+    if choice.lower() == 'a':
+        for e in list_folder:
+            grab_file_from_csv_task(e)
+        downloading_file_task()
+        break
+    if choice.lower() == 's':
+        i = 0
+        for folder in list_folder:
+            print(i, " - ", folder)
+            i+=1
+        while True:
+            conv_choice = int(input("Enter the selected conversation number : "))
+            if conv_choice >= 0 and conv_choice <= len(list_folder) - 1:
+                grab_file_from_csv_task(list_folder[conv_choice])
+                downloading_file_task()
+                break
+        break
