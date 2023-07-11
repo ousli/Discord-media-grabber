@@ -5,4 +5,5 @@
 4. Copy the absolute path of the "messages" folder located inside your Discord backup.
 5. Run the ``main.py`` file.
 6. Paste the copied absolute path when prompted.
-7. The program will now proceed to download all your media files into a new folder named **result**, which will be created inside the "messages" folder.
+7. Choose the options you want
+8. The program will now proceed to download all your media files.
