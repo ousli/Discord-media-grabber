@@ -3,7 +3,7 @@
 2. Unzip the downloaded file once you receive it.
 3. Install the **requests** library by running ``pip install requests``.
 4. Copy the absolute path of the "messages" folder located inside your Discord backup.
-5. Run the ``main.py`` file.
+5. Run the command ``python main.py``. (Or python3 main.py if doesn't work)
 6. Paste the copied absolute path when prompted.
 7. Choose the options you want
 8. The program will now proceed to download all your media files.
